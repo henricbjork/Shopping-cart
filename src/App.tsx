@@ -1,8 +1,10 @@
 import './App.css';
 
-import Item from 'components/Item/Item';
+import { useEffect, useState } from 'react';
+
+import CartOverlay from 'components/CartOverlay';
+import Item from 'components/ProductCard';
 import { useQuery } from 'react-query';
-import { useState } from 'react';
 
 export type CartItemType = {
   amount: number;
@@ -24,9 +26,13 @@ const App = () => {
     getProducts
   );
 
+  const [cartItems, setCartItems] = useState<CartItemType[]>([]);
+
   const getTotalItems = () => null;
 
-  const handleAddToCart = (clickedItem: CartItemType) => null;
+  const handleAddToCart = (clickedItem: CartItemType): void => {
+    setCartItems((prevState) => [...prevState, { ...clickedItem }]);
+  };
 
   const handleRemoveFromCart = () => null;
 
@@ -34,13 +40,16 @@ const App = () => {
   if (error) return <div>Something went wrong</div>;
 
   return (
-    <div className="grid grid-cols-4 gap-4 p-6 bg-gray-50">
-      {data?.map((item) => {
-        return (
-          <Item key={item.id} item={item} handleAddToCart={handleAddToCart} />
-        );
-      })}
-    </div>
+    <>
+      <div className="grid grid-cols-4 gap-4 p-6 bg-gray-50">
+        {data?.map((item) => {
+          return (
+            <Item key={item.id} item={item} handleAddToCart={handleAddToCart} />
+          );
+        })}
+      </div>
+      <CartOverlay items={cartItems} />
+    </>
   );
 };
 
