@@ -21,7 +21,7 @@ const getProducts = async (): Promise<CartItemType[]> => {
   return await (await fetch('https://fakestoreapi.com/products')).json();
 };
 
-const cartFromLocalStorage: CartItemType[] = JSON.parse(
+const storedCart: CartItemType[] = JSON.parse(
   localStorage.getItem('cart') || ''
 );
 
@@ -31,8 +31,7 @@ const App = () => {
     getProducts
   );
 
-  const [cartItems, setCartItems] =
-    useState<CartItemType[]>(cartFromLocalStorage);
+  const [cartItems, setCartItems] = useState<CartItemType[]>(storedCart);
   const [isOverlayOpen, setIsOverlayOpen] = useState<boolean>(false);
   const [totalItems, setTotalItems] = useState<number>(0);
 
