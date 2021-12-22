@@ -1,10 +1,12 @@
+import { FC } from 'react';
+
 type Props = {
   amountOfItems: number;
   styles: string;
   handleClick: () => void;
 };
 
-const CartIcon: React.FC<Props> = ({
+const CartIcon: FC<Props> = ({
   amountOfItems = 0,
   handleClick = () => null,
   styles,

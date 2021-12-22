@@ -1,11 +1,12 @@
 import { CartItemType } from 'App';
+import { FC } from 'react';
 
 type Props = {
   item: CartItemType;
   handleAddToCart: (clickedItem: CartItemType) => void;
 };
 
-const Item: React.FC<Props> = ({ item, handleAddToCart }) => {
+const Item: FC<Props> = ({ item, handleAddToCart }) => {
   return (
     <div className="bg-white">
       <div className="aspect-[3/4] p-12 flex items-center bg-white overflow-hidden relative">

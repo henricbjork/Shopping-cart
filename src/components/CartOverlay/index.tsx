@@ -1,5 +1,6 @@
 import CartItem from 'components/CartOverlay/CartItem';
 import { CartItemType } from 'App';
+import { FC } from 'react';
 
 type Props = {
   items?: CartItemType[];
@@ -9,7 +10,7 @@ type Props = {
   handleAddToCart: (item: CartItemType) => void;
 };
 
-const CartOverlay: React.FC<Props> = ({
+const CartOverlay: FC<Props> = ({
   handleAddToCart,
   handleRemoveFromCart,
   isOverlayOpen = false,
