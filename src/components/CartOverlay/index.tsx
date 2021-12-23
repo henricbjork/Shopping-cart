@@ -2,6 +2,7 @@ import { FC, useContext } from 'react';
 
 import { CartContext } from 'contexts/CartContext';
 import CartItem from 'components/CartOverlay/CartItem';
+import { Link } from 'react-router-dom';
 
 type Props = {
   isOverlayOpen: boolean;
@@ -32,7 +33,14 @@ const CartOverlay: FC<Props> = ({
           {cartItems.map((item) => {
             return <CartItem item={item} key={item.id} />;
           })}
-          <p>Total: ${totalCost.toFixed(2)}</p>
+          <p className="font-bold my-4">Total: ${totalCost.toFixed(2)}</p>
+          <Link
+            to="/checkout"
+            onClick={() => setIsOverlayOpen(false)}
+            className="bg-black text-white p-2"
+          >
+            Go to checkout
+          </Link>
         </>
       ) : (
         <p>Empty cart</p>
