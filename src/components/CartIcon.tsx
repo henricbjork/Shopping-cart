@@ -9,6 +9,7 @@ type Props = {
 
 const CartIcon: FC<Props> = ({ handleClick = () => null, styles }) => {
   const { totalItems } = useContext(CartContext);
+
   return (
     <div
       className={`relative z-10 p-2 inline-block border border-solid ${styles}`}

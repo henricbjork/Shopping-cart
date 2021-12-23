@@ -7,19 +7,17 @@ interface Props {
   isOverlayOpen: boolean;
 }
 
-const Header: FC<Props> = ({ setIsOverlayOpen, isOverlayOpen }) => {
-  return (
-    <div className="fixed flex justify-between items-center px-6 py-4 border-b shadow-md bg-white w-full z-10">
-      <Link to="/">Fakestore</Link>
-      <Link to="/checkout">Checkout</Link>
-      <Link to="/products">Shop</Link>
-      <CartIcon
-        handleClick={() => {
-          setIsOverlayOpen(!isOverlayOpen);
-        }}
-      />
-    </div>
-  );
-};
+const Header: FC<Props> = ({ setIsOverlayOpen, isOverlayOpen }) => (
+  <div className="fixed flex justify-between items-center px-6 py-4 border-b shadow-md bg-white w-full z-10">
+    <Link to="/">Fakestore</Link>
+    <Link to="/checkout">Checkout</Link>
+    <Link to="/products">Shop</Link>
+    <CartIcon
+      handleClick={() => {
+        setIsOverlayOpen(!isOverlayOpen);
+      }}
+    />
+  </div>
+);
 
 export default Header;
