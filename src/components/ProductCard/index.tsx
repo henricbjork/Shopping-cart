@@ -8,16 +8,16 @@ type Props = {
 
 const Item: FC<Props> = ({ item, handleAddToCart }) => {
   return (
-    <div className="bg-white">
+    <div className="bg-white border-2 rounded-sm overflow-hidden">
       <div className="aspect-[3/4] p-12 flex items-center bg-white overflow-hidden relative">
         <img src={item.image} alt={item.title} />
         <button
-          className="absolute top-0 right-0 p-4 bg-blue-300"
+          className="absolute top-1 right-1 p-2 bg-black text-white"
           onClick={() => {
             handleAddToCart(item);
           }}
         >
-          Add to cart
+          Add
         </button>
       </div>
       <div className="py-2 px-2">
