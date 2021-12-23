@@ -20,9 +20,6 @@ const App = () => {
         setIsOverlayOpen={setIsOverlayOpen}
       />
       <Outlet />
-      <div className="h-screen bg-yellow-500 flex justify-center items-center">
-        Home page goes here
-      </div>
     </CartProvider>
   );
 };
