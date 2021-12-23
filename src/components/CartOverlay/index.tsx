@@ -1,6 +1,7 @@
+import { FC, useEffect, useState } from 'react';
+
 import CartItem from 'components/CartOverlay/CartItem';
 import { CartItemType } from 'App';
-import { FC } from 'react';
 
 type Props = {
   items?: CartItemType[];
@@ -17,6 +18,20 @@ const CartOverlay: FC<Props> = ({
   items = [],
   setIsOverlayOpen,
 }) => {
+  const [totalCost, setTotalCost] = useState(0);
+
+  const calculateTotalCost = (items: CartItemType[]): number => {
+    return items.reduce(
+      (previousValue, currentValue) =>
+        previousValue + currentValue.amount * currentValue.price,
+      0
+    );
+  };
+
+  useEffect(() => {
+    setTotalCost(calculateTotalCost(items));
+  }, [items]);
+
   return (
     <div
       className={`z-20 fixed top-0 ${
@@ -31,16 +46,19 @@ const CartOverlay: FC<Props> = ({
         Close
       </button>
       {items.length > 0 ? (
-        items.map((item) => {
-          return (
-            <CartItem
-              handleAddToCart={handleAddToCart}
-              handleRemoveFromCart={handleRemoveFromCart}
-              item={item}
-              key={item.id}
-            />
-          );
-        })
+        <>
+          {items.map((item) => {
+            return (
+              <CartItem
+                handleAddToCart={handleAddToCart}
+                handleRemoveFromCart={handleRemoveFromCart}
+                item={item}
+                key={item.id}
+              />
+            );
+          })}
+          <p>Total: ${totalCost.toFixed(2)}</p>
+        </>
       ) : (
         <p>Empty cart</p>
       )}
