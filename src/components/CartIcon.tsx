@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 type Props = {
   amountOfItems: number;
-  styles: string;
+  styles?: string;
   handleClick: () => void;
 };
 
@@ -13,7 +13,7 @@ const CartIcon: FC<Props> = ({
 }) => {
   return (
     <div
-      className={`z-10 p-4 border border-solid border-black bg-white ${styles}`}
+      className={`relative z-10 p-2 inline-block border border-solid ${styles}`}
     >
       <p className="absolute top-[-10px] right-[-10px] bg-red-500 text-white flex justify-center items-center rounded-full w-6 h-6">
         {amountOfItems}
