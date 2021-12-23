@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { ReactNode, createContext } from 'react';
 
+import { Product } from 'types/product';
 import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 
@@ -8,24 +9,14 @@ interface Props {
   children: ReactNode;
 }
 
-export interface CartItemType {
-  amount: number;
-  category: string;
-  description: string;
-  id: number;
-  image: string;
-  price: number;
-  title: string;
-}
-
 interface Context {
-  data: CartItemType[] | undefined;
-  cartItems: CartItemType[];
+  data: Product[] | undefined;
+  cartItems: Product[];
   isLoading: boolean;
   error: unknown;
   totalCost: number;
   totalItems: number;
-  handleAddToCart: (clickedItem: CartItemType) => void;
+  handleAddToCart: (clickedItem: Product) => void;
   handleRemoveFromCart: (id: number, removeAllOfItem?: boolean) => void;
 }
 
@@ -40,25 +31,23 @@ const CartContext = createContext<Context>({
   handleRemoveFromCart: () => {},
 });
 
-const getProducts = async (): Promise<CartItemType[]> => {
+const getProducts = async (): Promise<Product[]> => {
   return await (await fetch('https://fakestoreapi.com/products')).json();
 };
 
-const storedCart: CartItemType[] = JSON.parse(
-  localStorage.getItem('cart') || ''
-);
+const storedCart: Product[] = JSON.parse(localStorage.getItem('cart') || '');
 
 const CartProvider: FC<Props> = ({ children }) => {
-  const { data, isLoading, error } = useQuery<CartItemType[]>(
+  const { data, isLoading, error } = useQuery<Product[]>(
     'products',
     getProducts
   );
 
-  const [cartItems, setCartItems] = useState(storedCart as CartItemType[]);
+  const [cartItems, setCartItems] = useState(storedCart as Product[]);
   const [totalItems, setTotalItems] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
 
-  const calculateTotalCost = (items: CartItemType[]): number => {
+  const calculateTotalCost = (items: Product[]): number => {
     return items.reduce(
       (previousValue, currentValue) =>
         previousValue + currentValue.amount * currentValue.price,
@@ -66,14 +55,14 @@ const CartProvider: FC<Props> = ({ children }) => {
     );
   };
 
-  const getTotalItems = (items: CartItemType[]) => {
+  const getTotalItems = (items: Product[]) => {
     return items.reduce(
       (previousValue, currentValue) => previousValue + currentValue.amount,
       0
     );
   };
 
-  const handleAddToCart = (clickedItem: CartItemType) => {
+  const handleAddToCart = (clickedItem: Product) => {
     setCartItems((prev) => {
       const existsInCart = prev.some((item) => item.id === clickedItem.id);
 

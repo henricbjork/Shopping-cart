@@ -1,9 +1,9 @@
-import { CartItemType } from 'App';
 import { FC } from 'react';
+import { Product } from 'types/product';
 
 type Props = {
-  item: CartItemType;
-  handleAddToCart: (clickedItem: CartItemType) => void;
+  item: Product;
+  handleAddToCart: (clickedItem: Product) => void;
 };
 
 const Item: FC<Props> = ({ item, handleAddToCart }) => {
