@@ -1,36 +1,19 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useContext } from 'react';
 
+import { CartContext } from 'contexts/CartContext';
 import CartItem from 'components/CartOverlay/CartItem';
-import { CartItemType } from 'App';
 
 type Props = {
-  items?: CartItemType[];
   isOverlayOpen: boolean;
   setIsOverlayOpen: (arg0: boolean) => void;
-  handleRemoveFromCart: (id: number, removeAllOfItem?: boolean) => void;
-  handleAddToCart: (item: CartItemType) => void;
 };
 
 const CartOverlay: FC<Props> = ({
-  handleAddToCart,
-  handleRemoveFromCart,
   isOverlayOpen = false,
-  items = [],
   setIsOverlayOpen,
 }) => {
-  const [totalCost, setTotalCost] = useState(0);
-
-  const calculateTotalCost = (items: CartItemType[]): number => {
-    return items.reduce(
-      (previousValue, currentValue) =>
-        previousValue + currentValue.amount * currentValue.price,
-      0
-    );
-  };
-
-  useEffect(() => {
-    setTotalCost(calculateTotalCost(items));
-  }, [items]);
+  const { cartItems, handleRemoveFromCart, handleAddToCart, totalCost } =
+    useContext(CartContext);
 
   return (
     <div
@@ -45,9 +28,9 @@ const CartOverlay: FC<Props> = ({
       >
         Close
       </button>
-      {items.length > 0 ? (
+      {cartItems.length > 0 ? (
         <>
-          {items.map((item) => {
+          {cartItems.map((item) => {
             return (
               <CartItem
                 handleAddToCart={handleAddToCart}
