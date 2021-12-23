@@ -5,9 +5,11 @@ import { Product } from 'types/product';
 import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 
-interface Props {
-  children: ReactNode;
-}
+const getProducts = async (): Promise<Product[]> => {
+  return await (await fetch('https://fakestoreapi.com/products')).json();
+};
+
+const storedCart: Product[] = JSON.parse(localStorage.getItem('cart') || '');
 
 interface Context {
   data: Product[] | undefined;
@@ -31,11 +33,9 @@ const CartContext = createContext<Context>({
   handleRemoveFromCart: () => {},
 });
 
-const getProducts = async (): Promise<Product[]> => {
-  return await (await fetch('https://fakestoreapi.com/products')).json();
-};
-
-const storedCart: Product[] = JSON.parse(localStorage.getItem('cart') || '');
+interface Props {
+  children: ReactNode;
+}
 
 const CartProvider: FC<Props> = ({ children }) => {
   const { data, isLoading, error } = useQuery<Product[]>(
@@ -44,8 +44,10 @@ const CartProvider: FC<Props> = ({ children }) => {
   );
 
   const [cartItems, setCartItems] = useState(storedCart as Product[]);
-  const [totalItems, setTotalItems] = useState(0);
-  const [totalCost, setTotalCost] = useState(0);
+  const [{ totalItems, totalCost }, setTotals] = useState({
+    totalItems: 0,
+    totalCost: 0,
+  });
 
   const calculateTotalCost = (items: Product[]): number => {
     return items.reduce(
@@ -102,8 +104,10 @@ const CartProvider: FC<Props> = ({ children }) => {
   };
 
   useEffect(() => {
-    setTotalItems(getTotalItems(cartItems));
-    setTotalCost(calculateTotalCost(cartItems));
+    setTotals({
+      totalItems: getTotalItems(cartItems),
+      totalCost: calculateTotalCost(cartItems),
+    });
     localStorage.setItem('cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
