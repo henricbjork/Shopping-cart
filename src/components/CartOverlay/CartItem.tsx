@@ -17,7 +17,8 @@ const CartItem: FC<Props> = ({
       <img src={item.image} alt={item.title} className="w-20 object-contain" />
       <div className="flex-col">
         <p>{item.title}</p>
-        <p>{item.price}</p>
+        <p>${item.price}</p>
+        <p>Total: ${(item.price * item.amount).toFixed(2)}</p>
         <div className="flex ml-4">
           <button onClick={() => handleRemoveFromCart(item.id)}>-</button>
           <p className="p-4">{item.amount}</p>
