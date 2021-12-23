@@ -1,10 +1,12 @@
 import './App.css';
 
-import Item from 'components/Item/Item';
-import { useQuery } from 'react-query';
+import CartOverlay from 'components/CartOverlay';
+import { CartProvider } from 'contexts/CartContext';
+import Header from 'components/Header';
+import { Outlet } from 'react-router-dom';
 import { useState } from 'react';
 
-export type CartItemType = {
+export interface CartItemType {
   amount: number;
   category: string;
   description: string;
@@ -12,35 +14,23 @@ export type CartItemType = {
   image: string;
   price: number;
   title: string;
-};
-
-const getProducts = async (): Promise<CartItemType[]> => {
-  return await (await fetch('https://fakestoreapi.com/products')).json();
-};
+}
 
 const App = () => {
-  const { data, isLoading, error } = useQuery<CartItemType[]>(
-    'products',
-    getProducts
-  );
-
-  const getTotalItems = () => null;
-
-  const handleAddToCart = (clickedItem: CartItemType) => null;
-
-  const handleRemoveFromCart = () => null;
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Something went wrong</div>;
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
   return (
-    <div className="grid grid-cols-4 gap-4 p-6 bg-gray-50">
-      {data?.map((item) => {
-        return (
-          <Item key={item.id} item={item} handleAddToCart={handleAddToCart} />
-        );
-      })}
-    </div>
+    <CartProvider>
+      <Header
+        setIsOverlayOpen={setIsOverlayOpen}
+        isOverlayOpen={isOverlayOpen}
+      />
+      <CartOverlay
+        isOverlayOpen={isOverlayOpen}
+        setIsOverlayOpen={setIsOverlayOpen}
+      />
+      <Outlet />
+    </CartProvider>
   );
 };
 
