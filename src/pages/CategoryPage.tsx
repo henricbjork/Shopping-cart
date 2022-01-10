@@ -1,7 +1,7 @@
 import { FC, useContext } from 'react';
 
 import { CartContext } from 'contexts/CartContext';
-import Item from 'components/ProductCard';
+import ProductCard from 'components/ProductCard';
 
 const CategoryPage: FC = () => {
   const { data, isLoading, error } = useContext(CartContext);
@@ -14,14 +14,16 @@ const CategoryPage: FC = () => {
       </div>
     );
 
-  return (
+  return data ? (
     <div className="pt-[100px] px-6">
       <div className="grid grid-cols-4 gap-4">
-        {data?.map((item) => {
-          return <Item key={item.id} item={item} />;
+        {data.map((item) => {
+          return <ProductCard key={item.id} item={item} />;
         })}
       </div>
     </div>
+  ) : (
+    <div className="h-screen flex justify-center items-center">No products</div>
   );
 };
 
