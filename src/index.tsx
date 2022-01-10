@@ -6,6 +6,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import App from './App';
 import CategoryPage from 'pages/CategoryPage';
 import CheckoutPage from 'pages/CheckoutPage';
+import ProductPage from 'pages/ProductPage';
 import { render } from 'react-dom';
 
 const client = new QueryClient();
@@ -14,6 +15,7 @@ const rootElement = document.getElementById('root');
 const routes = [
   { path: 'checkout', element: <CheckoutPage /> },
   { path: 'products', element: <CategoryPage /> },
+  { path: 'products/:productId', element: <ProductPage /> },
 ];
 
 render(
@@ -22,7 +24,7 @@ render(
       <Routes>
         <Route path="/" element={<App />}>
           {routes.map((route) => (
-            <Route path={route.path} element={route.element} />
+            <Route key={route.path} path={route.path} element={route.element} />
           ))}
         </Route>
       </Routes>

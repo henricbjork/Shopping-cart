@@ -6,16 +6,6 @@ import Header from 'components/Header';
 import { Outlet } from 'react-router-dom';
 import { useState } from 'react';
 
-export interface CartItemType {
-  amount: number;
-  category: string;
-  description: string;
-  id: number;
-  image: string;
-  price: number;
-  title: string;
-}
-
 const App = () => {
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 

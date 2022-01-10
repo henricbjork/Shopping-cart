@@ -1,17 +1,15 @@
-import { CartItemType } from 'App';
-import { FC } from 'react';
+import { FC, useContext } from 'react';
+
+import { CartContext } from 'contexts/CartContext';
+import { Product } from 'types/product';
 
 type Props = {
-  item: CartItemType;
-  handleRemoveFromCart: (id: number, removeAllOfItem?: boolean) => void;
-  handleAddToCart: (item: CartItemType) => void;
+  item: Product;
 };
 
-const CartItem: FC<Props> = ({
-  item,
-  handleRemoveFromCart,
-  handleAddToCart,
-}) => {
+const CartItem: FC<Props> = ({ item }) => {
+  const { handleAddToCart, handleRemoveFromCart } = useContext(CartContext);
+
   return (
     <div className="flex h-[150px] p-2">
       <img src={item.image} alt={item.title} className="w-20 object-contain" />
