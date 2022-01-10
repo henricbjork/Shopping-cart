@@ -1,11 +1,18 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 
-interface Props {}
+import { CartContext } from 'contexts/CartContext';
+import CartItem from 'components/CartOverlay/CartItem';
 
-const CheckoutPage: FC<Props> = () => {
+const CheckoutPage: FC = () => {
+  const { cartItems } = useContext(CartContext);
+
   return (
-    <div className="h-screen bg-green-500 flex justify-center items-center">
-      Checkout page goes here
+    <div className="h-screen flex justify-center items-center">
+      <div className="w-[400px]">
+        {cartItems.map((item) => {
+          return <CartItem key={item.id} item={item} />;
+        })}
+      </div>
     </div>
   );
 };
