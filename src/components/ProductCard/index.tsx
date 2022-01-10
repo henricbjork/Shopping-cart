@@ -1,24 +1,23 @@
+import AddToCartButton from 'components/AddToCartButton';
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { Product } from 'types/product';
 
 type Props = {
   item: Product;
-  handleAddToCart: (clickedItem: Product) => void;
 };
 
-const Item: FC<Props> = ({ item, handleAddToCart }) => {
+const Item: FC<Props> = ({ item }) => {
   return (
     <div className="bg-white border-2 rounded-sm overflow-hidden">
       <div className="aspect-[3/4] p-12 flex items-center bg-white overflow-hidden relative">
-        <img src={item.image} alt={item.title} />
-        <button
-          className="absolute top-1 right-1 p-2 bg-black text-white"
-          onClick={() => {
-            handleAddToCart(item);
-          }}
-        >
-          Add
-        </button>
+        <Link to={`/products/${item.id}`}>
+          <img src={item.image} alt={item.title} />
+        </Link>
+        <AddToCartButton
+          styles="absolute top-1 right-1 p-2 bg-black text-white"
+          item={item}
+        />
       </div>
       <div className="py-2 px-2">
         <h3 className="h-[3.5rem] overflow-hidden text-xl font-medium mb-2">
